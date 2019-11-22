@@ -40,9 +40,7 @@ function turn(vehicles, peoples, buildings){
           nextStopName = peep.destination;
         }
       });
-    }
-
-    if(nextStopName) {
+      
       car.moveTo(getBuildingByName(buildings, nextStopName));
       peoples.forEach(function(peep) {
         car.pick(peep);
@@ -67,7 +65,6 @@ function turn(vehicles, peoples, buildings){
     if(closestPeep) {
       moveCarToTarget(car, closestPeep);
       car.pick(closestPeep);
-      return;
     }
 
   });
