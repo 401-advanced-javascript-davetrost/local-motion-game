@@ -28,15 +28,11 @@ function turn(vehicles, peoples, buildings){
 
   vehicles.forEach(function(car, i) {
 
-    var distanceToClosestDest = 999;
-    car.peoples.forEach(function(peep) {
-      var d = getDistance(car, getBuildingByName(buildings, peep.destination));
-      if(d < distanceToClosestDest) {
-        distanceToClosestDest = d;
-        car.nextStopName = peep.destination;
-      }
-    });
-    if(distanceToClosestDest === 999 || distanceToClosestDest < 1) {
+    if(car.peoples.length) {
+      car.nextStopName = car.peoples[0].destination;
+      activeCustomers[i] = car.peoples[0];
+    }
+    else {
       car.nextStopName = '';
       activeCustomers[i] = null;
     }
@@ -44,13 +40,12 @@ function turn(vehicles, peoples, buildings){
     var closestPeep = null;
     var distanceToClosestPeep = 999;
     peoples.forEach(function(peep) {
-      if(!car.nextStopName && !activeCustomers.includes(peep)) {
+      if(!car.nextStopName && !activeCustomers.includes(peep) && peep.time > 30) {
         var pickupDistance = getDistance(car, peep);
         if(pickupDistance < distanceToClosestPeep) {
           distanceToClosestPeep = pickupDistance;
           activeCustomers[i] = peep;
           closestPeep = peep;
-          console.log(peep);
         }
       }
 
